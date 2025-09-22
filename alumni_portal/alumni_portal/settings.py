@@ -9,7 +9,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-hcm^dj%&3u8ixc+manxu07q%kt80@cvi*42jfl#15vjq(q-d(q'
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'alumni-management-system-backend.onrender.com',
+    'localhost',
+    '127.0.0.1',
+]
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -35,7 +40,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
-
+     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -89,6 +94,12 @@ USE_TZ = True
 
 # Static files
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Extra places Django will also look for static files
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # ✅ Media files (for uploads like Event images)
 MEDIA_URL = '/media/'
@@ -101,4 +112,8 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+# WhiteNoise config (for gzip/manifest in production)
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
